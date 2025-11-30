@@ -109,6 +109,7 @@ class main(QtWidgets.QMainWindow):
 
         self.Save_location_input = QtWidgets.QLineEdit(self)
         self.Save_location_input.setGeometry(200, 150, 450, 30)
+        
 
 
 
