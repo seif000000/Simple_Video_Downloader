@@ -61,7 +61,10 @@ class main(QtWidgets.QMainWindow):
     
     
     def handel_browes_click(self):
-        pass
+        file_dialog = QtWidgets.QFileDialog(self)
+        save_location, _ = file_dialog.getSaveFileName(self, "Save File", "", "All Files (*)")
+        if save_location:
+            self.Save_location_input.setText(save_location)
     
     
     
@@ -72,7 +75,7 @@ class main(QtWidgets.QMainWindow):
             progress = int(downloaded * 100 / total_size)
             self.Progress_bar.setValue(progress)
             QApplication.processEvents() # for not responding UI
-                                         # concurrently
+                                            # concurrently
 
 
 
@@ -88,9 +91,9 @@ class main(QtWidgets.QMainWindow):
         self.Save_location_input.clear()
 
 
-# #################### add function to fix google drive links ##########################
-# bocause urllib cant download from google drive directy
-    ######################################################################################
+# #################### add function to fix google drive links ########################
+###### bocause urllib cant download from google drive directy ########################
+######################################################################################
     
     def fix_link_url(self, url):
         url = self.Video_URL_input.text()
@@ -164,6 +167,7 @@ class main(QtWidgets.QMainWindow):
 
         self.Browse = QtWidgets.QPushButton("Browse", self)
         self.Browse.setGeometry(660, 150, 100, 30)
+        self.Browse.clicked.connect(self.handel_browes_click)
 
 
 
@@ -182,16 +186,14 @@ class main(QtWidgets.QMainWindow):
                 background: #000000;
                 color: #eee;
             }
-            QLabel {
-                font-size: 16px;
-                font-weight: bold;
-                background-color: #a7a7a7;
-                }
             QPushButton {
-                background-color: #4d4d4d;
+                background-color: #4c4c4c;
                 }
             QMainWindow {
                 background-color: #3a3a3a;
+                }
+            QPushButton:hover {
+                background-color: #d60303;
                 }
         """)
 
