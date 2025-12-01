@@ -218,6 +218,10 @@ class main(QtWidgets.QMainWindow):
                 background-color: #3d3d3d;
                 color: #ffffff;
             }
+            QMessageBox{
+                background-color: #2b2b2b;
+                color: #ffffff;
+            }
         """)
 
 
