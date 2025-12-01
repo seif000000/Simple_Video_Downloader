@@ -40,6 +40,7 @@
 
 import sys
 from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtWidgets import QMessageBox
 import urllib.request
 
 
@@ -63,19 +64,25 @@ class main(QtWidgets.QMainWindow):
     
     
     
-    def handel_progress(self):
-        pass
+    def handel_progress(self, block_num, block_size, total_size):
+        if total_size > 0:
+            downloaded = block_num * block_size
+            progress = int(downloaded * 100 / total_size)
+            self.Progress_bar.setValue(progress)
     
     
     
     
     def download_file(self):
-        pass
-    
-    
-    
-    
-    
+        url = self.Video_URL_input.text()
+        save_location = self.Save_location_input.text()
+        urllib.request.urlretrieve(url, save_location, self.handel_progress)
+
+        QMessageBox.information(self, "Download Complete", "The video has been downloaded successfully.")
+        self.Progress_bar.setValue(0)
+        self.Video_URL_input.clear()
+        self.Save_location_input.clear()
+
 
 
 
@@ -99,7 +106,7 @@ class main(QtWidgets.QMainWindow):
 
         
         help_menu = menubar.addMenu("Help")
-        help_menu = menubar.addMenu("About")            
+        about_menu = menubar.addMenu("About")
 
 
         self.Video_URL_input = QtWidgets.QLineEdit(self)
@@ -116,13 +123,13 @@ class main(QtWidgets.QMainWindow):
 
         self.Progress_bar = QtWidgets.QProgressBar(self)
         self.Progress_bar.setGeometry(200, 250, 500, 30)
-        self.Progress_bar.setValue(20)  # Initial value of the progress bar
+        # self.Progress_bar.setValue(20)  # Initial value of the progress bar
 
 
 
         self.Download = QtWidgets.QPushButton("Download Video", self)
         self.Download.setGeometry(350, 400, 100, 30)
-        self.Download.clicked.connect(self.handel_button_click)
+        self.Download.clicked.connect(self.download_file)
 
 
 
@@ -141,9 +148,9 @@ class main(QtWidgets.QMainWindow):
 
 
 
-        text = QtWidgets.QPlainTextEdit(self)
-        text.setGeometry(50, 200, 700, 150)
-        text.setPlaceholderText("Enter any additional information here...")
+        # text = QtWidgets.QPlainTextEdit(self)
+        # text.setGeometry(50, 200, 700, 150)
+        # text.setPlaceholderText("Enter any additional information here...")
 
 
 
@@ -156,7 +163,7 @@ class main(QtWidgets.QMainWindow):
                 background: #000000;
                 color: #eee;
             }
-            Qlabel {
+            QLabel {
                 font-size: 16px;
                 font-weight: bold;
                 background-color: #a7a7a7;
