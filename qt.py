@@ -84,6 +84,11 @@ class main(QtWidgets.QMainWindow):
         url = self.fix_link_url(url)
         save_location = self.Save_location_input.text()
         urllib.request.urlretrieve(url, save_location, self.handel_progress)
+        
+        # try:
+        #     urllib.request.urlretrieve(url, save_location, self.handel_progress)
+        # except Exception as e:
+        #     return QMessageBox.warning(self, "Download Error", f"An error occurred: {e}")
 
         QMessageBox.information(self, "Download Complete", "The video has been downloaded successfully.")
         self.Progress_bar.setValue(0)
