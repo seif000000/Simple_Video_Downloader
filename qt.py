@@ -40,7 +40,7 @@
 
 import sys
 from PySide6 import QtCore, QtGui, QtWidgets
-from PySide6.QtWidgets import QMessageBox
+from PySide6.QtWidgets import QMessageBox ,QApplication
 import urllib.request
 
 
@@ -71,6 +71,8 @@ class main(QtWidgets.QMainWindow):
             downloaded = block_num * block_size
             progress = int(downloaded * 100 / total_size)
             self.Progress_bar.setValue(progress)
+            QApplication.processEvents() # for not responding UI
+                                         # concurrently
 
 
 
