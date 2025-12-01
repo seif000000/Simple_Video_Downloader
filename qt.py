@@ -75,7 +75,7 @@ class main(QtWidgets.QMainWindow):
             progress = int(downloaded * 100 / total_size)
             self.Progress_bar.setValue(progress)
             QApplication.processEvents() # for not responding UI
-                                            # concurrently
+                                            # concurrently  >> threading 
 
 
 
@@ -182,19 +182,42 @@ class main(QtWidgets.QMainWindow):
 
 
         self.setStyleSheet("""
-            QMenuBar {
-                background: #000000;
-                color: #eee;
-            }
-            QPushButton {
-                background-color: #4c4c4c;
-                }
             QMainWindow {
-                background-color: #3a3a3a;
-                }
+                background-color: #2b2b2b;
+            }
+
+            QMenuBar {
+                background-color: #1e1e1e;
+                color: #ffffff;
+            }
+
+            QMenuBar::item:selected {
+                background-color: #ff4757;
+            }
+
+            QPushButton {
+                background-color: #3d3d3d;
+                color: #ffffff;
+                border-radius: 10px;
+                font-size: 10px;
+            }
+
             QPushButton:hover {
-                background-color: #d60303;
-                }
+                background-color: #ff4757;
+            }
+
+            QPushButton:pressed {
+                background-color: #d63031;
+            }
+
+            QLabel {
+                color: #ffffff;
+            }
+
+            QLineEdit, QTextEdit {
+                background-color: #3d3d3d;
+                color: #ffffff;
+            }
         """)
 
 
