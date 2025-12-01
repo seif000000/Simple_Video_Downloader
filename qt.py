@@ -54,8 +54,10 @@ class main(QtWidgets.QMainWindow):
 
 
     def handel_button_click(self):
-        urllib.request.urlretrieve(url=self.Video_URL_input.text())
-    
+        try:
+            urllib.request.urlretrieve(url=self.Video_URL_input.text())
+        except:
+            urllib.request.HTTPError("Error: Invalid URL")
     
     
     def handel_browes_click(self):
@@ -69,12 +71,12 @@ class main(QtWidgets.QMainWindow):
             downloaded = block_num * block_size
             progress = int(downloaded * 100 / total_size)
             self.Progress_bar.setValue(progress)
-    
-    
-    
-    
-    def download_file(self):
-        url = self.Video_URL_input.text()
+
+
+
+    def download_file(self, url):
+        # url = self.Video_URL_input.text()
+        url = self.fix_link_url(url)
         save_location = self.Save_location_input.text()
         urllib.request.urlretrieve(url, save_location, self.handel_progress)
 
@@ -84,8 +86,21 @@ class main(QtWidgets.QMainWindow):
         self.Save_location_input.clear()
 
 
-
-
+# #################### add function to fix google drive links ##########################
+# bocause urllib cant download from google drive directy
+    ######################################################################################
+    
+    def fix_link_url(self, url):
+        url = self.Video_URL_input.text()
+        if "drive.google.com" in url:
+            file_id = None
+            if "/d/" in url:
+                file_id = url.split("/d/")[1].split("/")[0]
+            elif "id=" in url:
+                file_id = url.split("id=")[1]
+            if file_id:
+                url = f"https://drive.google.com/uc?export=download&id={file_id}"
+        return url
 
 
 
