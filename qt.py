@@ -92,6 +92,8 @@ class main(QtWidgets.QMainWindow):
     
     def fix_link_url(self, url):
         url = self.Video_URL_input.text()
+        if url == "":
+            return QMessageBox.warning(self, "Input Error", "Please enter a valid URL.")
         if "drive.google.com" in url:
             file_id = None
             if "/d/" in url:
