@@ -50,22 +50,31 @@ class main(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.handel_ui()
-        self.url = self.Video_URL_input.text()
+
+
 
 
     def handel_button_click(self):
         try:
+            url = self.Video_URL_input.text()
+            save = self.Save_location_input.text()
             # threading.Thread(target=self.download_file).start()
-            t = threading.Thread(target=self.download_file)
+            t = threading.Thread(target=self.download_file, args=(url,))
             t.start()
         except:
             urllib.request.HTTPError("Error: Invalid URL")
 
+
+    
+    
     def handel_browes_click(self):
         file_dialog = QtWidgets.QFileDialog(self)
         save_location, _ = file_dialog.getSaveFileName(self, "Save File", "", "All Files (*)")
         if save_location:
             self.Save_location_input.setText(save_location)
+    
+    
+    
     
     def handel_progress(self, block_num, block_size, total_size):
         if total_size > 0:
@@ -75,10 +84,13 @@ class main(QtWidgets.QMainWindow):
             # QApplication.processEvents() # for not responding UI
                                             # concurrently  >> threading 
 
-    def download_file(self):
-        fix_url = self.fix_link_url(self.url)
+
+
+    def download_file(self, url):
+        # url = self.Video_URL_input.text()
+        url = self.fix_link_url(url)
         save_location = self.Save_location_input.text()
-        urllib.request.urlretrieve(fix_url, save_location, self.handel_progress)
+        urllib.request.urlretrieve(url, save_location, self.handel_progress)
         
         # try:
         #     urllib.request.urlretrieve(url, save_location, self.handel_progress)
@@ -109,7 +121,12 @@ class main(QtWidgets.QMainWindow):
                 url = f"https://drive.google.com/uc?export=download&id={file_id}"
         return url
 
+
+
 ##########################    setgometry(x, y, width, height)   ########################################    
+
+
+
     def handel_ui(self):
         self.setWindowTitle("pydownloader")
         self.setWindowIcon(QtGui.QIcon("download.jpg"))
