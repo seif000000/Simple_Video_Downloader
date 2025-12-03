@@ -69,7 +69,7 @@ class main(QtWidgets.QMainWindow):
     
     def handel_browes_click(self):
         file_dialog = QtWidgets.QFileDialog(self)
-        save_location, _ = file_dialog.getSaveFileName(self, "Save File", "", "All Files (*)")
+        save_location, _ = file_dialog.getSaveFileName(self, "Save File", "test.mp4", "All Files (*)")
         if save_location:
             self.Save_location_input.setText(save_location)
     
