@@ -42,6 +42,7 @@ import sys
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtWidgets import QMessageBox ,QApplication
 import urllib.request
+import threading
 
 
 
@@ -55,9 +56,14 @@ class main(QtWidgets.QMainWindow):
 
     def handel_button_click(self):
         try:
-            urllib.request.urlretrieve(url=self.Video_URL_input.text())
+            url = self.Video_URL_input.text()
+            # threading.Thread(target=self.download_file).start()
+            t = threading.Thread(target=self.download_file, args=(url,))
+            t.start()
         except:
             urllib.request.HTTPError("Error: Invalid URL")
+
+
     
     
     def handel_browes_click(self):
@@ -74,7 +80,7 @@ class main(QtWidgets.QMainWindow):
             downloaded = block_num * block_size
             progress = int(downloaded * 100 / total_size)
             self.Progress_bar.setValue(progress)
-            QApplication.processEvents() # for not responding UI
+            # QApplication.processEvents() # for not responding UI
                                             # concurrently  >> threading 
 
 
@@ -156,7 +162,7 @@ class main(QtWidgets.QMainWindow):
 
         self.Download = QtWidgets.QPushButton("Download Video", self)
         self.Download.setGeometry(350, 400, 100, 30)
-        self.Download.clicked.connect(self.download_file)
+        self.Download.clicked.connect(self.handel_button_click)
 
 
 
