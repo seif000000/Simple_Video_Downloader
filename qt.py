@@ -234,6 +234,15 @@ class main(QtWidgets.QMainWindow):
                 background-color: #2b2b2b;
                 color: #ffffff;
             }
+            QProgressBar {
+                background-color: #3d3d3d;
+                border-radius: 20px;
+                text-align: center;
+            }
+            QProgressBar::chunk {
+                background-color: #ff4757;
+                border-radius: 20px;
+            }
         """)
 
 
